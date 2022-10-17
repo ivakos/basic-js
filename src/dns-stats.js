@@ -22,13 +22,17 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-
+  domains = [
+  'code.yandex.ru',
+   'music.yandex.ru',
+   'yandex.ru'
+  ]
 function getDNSStats(arr) {
   const store = {};
   for (let i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].split('.').reverse().map((x) => "." + x)
+    const arrNew = arr[i].split('.').reverse().map((x) => "." + x)
     const newCollection = [];
-    arr[i].reduce((res, v) => {
+    arrNew.reduce((res, v) => {
       const a = res + v;
       newCollection.push(a);
       return a
@@ -44,7 +48,7 @@ function getDNSStats(arr) {
   }
   return store;
 }
-
+getDNSStats(domains)
 module.exports = {
   getDNSStats
 };
