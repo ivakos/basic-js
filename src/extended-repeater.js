@@ -15,43 +15,30 @@ const { NotImplementedError } = require('../extensions/index.js');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
+
 function repeater(str, options) {
   let result = '';
-  
-  let stroka = String(str);
 
-  let repeatTimes = 1;
-   if(options.repeatTimes) repeatTimes = +options.repeatTimes;
+  if (typeof str != 'string') str = String(str);
+  if (!options.repeatTimes && str) options.repeatTimes = 1;
+  if (!options.additionRepeatTimes && options.addition) options.additionRepeatTimes = 1;
+  if (!options.separator) options.separator = '+';
+  if (typeof options.addition != 'string') options.addition = String(options.addition);
+  if (!options.additionSeparator) options.additionSeparator = '|';
 
-  let separator = "+";
-  if(options.separator) separator = options.separator;
-
-  let addition = '';
-  if(options.addition ) {
-    addition = String(options.addition);
-  };
-
-  let additionRepeatTimes = 1;
-  if(options.additionRepeatTimes) additionRepeatTimes = +options.additionRepeatTimes;
-
-  let additionSeparator = "|";
-  if(options.additionSeparator) additionSeparator = options.additionSeparator;
-
-  result = stroka + (addition + additionSeparator).repeat(additionRepeatTimes);
-  result = result.split('')
-  let buffer = result.lastIndexOf(additionSeparator)-additionSeparator.length + 1;
-  result.splice(buffer, additionSeparator.length )
-  result = result.join('');
-
-  result = (result + separator).repeat(repeatTimes);
-  result = result.split('')
-  buffer = result.lastIndexOf(separator)-separator.length + 1;
-  result.splice(buffer, separator.length)
-  result = result.join('');
-  console.log(result)
+  for (let i = 0; i < options.repeatTimes; i++) {
+    let buf = '';
+    for (let k = 0; k < options.additionRepeatTimes; k++) {
+      if (!options.additionRepeatTimes) break;
+      buf += options.addition + options.additionSeparator;
+    }
+    buf = buf.substring(0, buf.lastIndexOf(options.additionSeparator))
+    result += str + buf + options.separator;
+  }
+  result = result.substring(0, result.lastIndexOf(options.separator))
+  console.log(typeof options.addition);
   return result;
 }
-repeater(true, { repeatTimes: 3, separator: '??? ', addition: false, additionRepeatTimes: 2, additionSeparator: '!!!' })
 
 module.exports = {
   repeater
