@@ -19,7 +19,7 @@ function sortByHeight(arr) {
       result.splice(i, 0, arr[i]);
     }
   }
-
+  
   return result;
 }
 
