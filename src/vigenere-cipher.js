@@ -20,12 +20,14 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
+
   encrypt() {
 
   }
   decrypt() {
-
+ss
   }
+  
 }
 
 module.exports = {
